@@ -28,7 +28,7 @@ function draw(){
     fill("FF0000");
     stroke("FF0000"); 
    
-    if(scoreLeftWrist > 0.2){  
+    if(scoreleftWrist > 0.2){  
     circle(leftWristX, leftWristY, 20);
     InNumberleftWristY = Number(leftWristY);
     romove_decimals = floor(InNumberleftWristY);
