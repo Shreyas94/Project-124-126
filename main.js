@@ -9,7 +9,7 @@ function preload(){
 }
 
 function setup(){
-    canvas = createCanvs(600, 500);
+    canvas = createCanvas(600, 500);
     canvas.center();
 
     video = createCapture(VIDEO);
@@ -20,23 +20,41 @@ function setup(){
 }
 
 function modelLoaded(){
-    console.log("PoseNet is Intialized");
+    console.log('PoseNet Is Initialized');
 }
+
 function draw(){
     image(video, 0, 0, 600, 500);
+    fill("FF0000");
+    stroke("FF0000"); 
+   
+    if(scoreLeftWrist > 0.2){  
+    circle(leftWristX, leftWristY, 20);
+    InNumberleftWristY = Number(leftWristY);
+    romove_decimals = floor(InNumberleftWristY);
+    volume = remove_decimals/500;
+    document.getElementById("volume").innerHTML = "VOlume = " + volume;      
+    song.setVolume(volume);
+}
 }
 
 function play(){
     song.play();
+    song.setVolume(1);
+    song.rate(1);
 }
 
 function gotPoses(result){
- 
-    if(result > 0)
-    {leftWristX = result[0].pose.leftWrist.x;
-    leftWristY = result[0].pose.leftWrist.y;
-    console.log("LeftWristX = " + leftWristX + "LeftWristY = " +leftWristY); 
-    rightWristX = result[0].pose.rightWrist.x;
-    rightWristY = result[0].pose.rightWrist.y;    
-    console.log("rightWristX = " + rightWristX + "RightWristY = " +rightWristY);
-}}
+    if (result.length > 0){
+        console.log(result);
+        scoreLeftWrist = result[0].pose.keypoints[9].score;
+        console.log("ScoreLeftWrist = " + scoreLeftWrist);
+        leftWristX = result[0].pose.leftWrist.x;
+        leftWristY = result[0].pose.leftWrist.y;
+        console.log("LeftWristX = " + leftWristX + "LeftWristY = " +leftWristY); 
+        rightWristX = result[0].pose.rightWrist.x;
+        rightWristY = result[0].pose.rightWrist.y;    
+        console.log("rightWristX = " + rightWristX + "RightWristY = " +rightWristY); 
+    
+    }       
+}
